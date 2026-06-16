@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hafizur Rahaman | BSc Nursing Graduate</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: #1a1a1a; background: #fff; }
+
+  /* NAV */
+  nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 2rem; border-bottom: 1px solid #e8e8e8;
+    position: sticky; top: 0; background: #fff; z-index: 100;
+  }
+  .nav-logo { font-size: 17px; font-weight: 600; }
+  .nav-logo span { color: #1D9E75; }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-links a { font-size: 14px; color: #666; text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: #1D9E75; }
+
+  /* HERO */
+  .hero {
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 3rem; padding: 4rem 2rem; align-items: center;
+    max-width: 860px; margin: 0 auto;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #E1F5EE; color: #0F6E56;
+    font-size: 12px; font-weight: 500; padding: 5px 14px;
+    border-radius: 20px; margin-bottom: 1.2rem;
+  }
+  .hero-badge::before { content: '✦'; font-size: 10px; }
+  .hero h1 { font-size: 34px; font-weight: 600; line-height: 1.25; margin-bottom: 0.75rem; }
+  .hero h1 .name { color: #1D9E75; display: block; }
+  .hero-sub { font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 1.75rem; max-width: 440px; }
+  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary {
+    background: #1D9E75; color: #fff; border: none;
+    padding: 11px 22px; border-radius: 8px; font-size: 14px;
+    font-weight: 500; cursor: pointer; text-decoration: none; display: inline-block;
+  }
+  .btn-outline {
+    background: transparent; color: #1a1a1a;
+    border: 1px solid #ddd; padding: 11px 22px;
+    border-radius: 8px; font-size: 14px; cursor: pointer;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-outline:hover { border-color: #1D9E75; color: #1D9E75; }
+
+  /* AVATAR */
+  .avatar-wrap { display: flex; justify-content: center; align-items: center; }
+  .avatar {
+    width: 160px; height: 160px; border-radius: 50%;
+    background: #E1F5EE; border: 3px solid #5DCAA5;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 52px; font-weight: 600; color: #0F6E56;
+    position: relative; flex-shrink: 0;
+  }
+  .avatar-tag {
+    position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%);
+    background: #1D9E75; color: #fff; font-size: 11px; font-weight: 500;
+    padding: 4px 12px; border-radius: 20px; white-space: nowrap;
+  }
+
+  /* DIVIDER */
+  hr { border: none; border-top: 1px solid #f0f0f0; }
+
+  /* SECTIONS */
+  .section { padding: 3rem 2rem; max-width: 860px; margin: 0 auto; }
+  .section-eyebrow { font-size: 11px; font-weight: 600; color: #1D9E75; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  .section-title { font-size: 22px; font-weight: 600; margin-bottom: 2rem; }
+
+  /* STATS */
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .stat-card { background: #f7f7f5; border-radius: 10px; padding: 1.25rem; text-align: center; }
+  .stat-num { font-size: 30px; font-weight: 600; color: #1D9E75; }
+  .stat-lbl { font-size: 13px; color: #777; margin-top: 4px; }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+  .skill-card {
+    border: 1px solid #ebebeb; border-radius: 12px; padding: 1.1rem 1.1rem;
+    display: flex; align-items: flex-start; gap: 12px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .skill-card:hover { border-color: #5DCAA5; box-shadow: 0 2px 12px rgba(29,158,117,0.08); }
+  .skill-icon { font-size: 22px; flex-shrink: 0; }
+  .skill-name { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .skill-desc { font-size: 12px; color: #777; line-height: 1.5; }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; gap: 14px; }
+  .exp-card {
+    border: 1px solid #ebebeb; border-radius: 12px; padding: 1.25rem;
+    display: flex; gap: 14px; transition: border-color 0.2s;
+  }
+  .exp-card:hover { border-color: #5DCAA5; }
+  .exp-dot-wrap { display: flex; flex-direction: column; align-items: center; padding-top: 4px; }
+  .exp-dot { width: 10px; height: 10px; background: #1D9E75; border-radius: 50%; flex-shrink: 0; }
+  .exp-line { width: 1px; background: #e0e0e0; flex: 1; margin-top: 6px; }
+  .exp-last .exp-line { display: none; }
+  .exp-title { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+  .exp-place { font-size: 13px; color: #1D9E75; font-weight: 500; margin-bottom: 6px; }
+  .exp-desc { font-size: 13px; color: #555; line-height: 1.6; }
+  .exp-date {
+    display: inline-block; margin-top: 8px;
+    font-size: 11px; background: #f0f0f0; color: #666;
+    padding: 3px 10px; border-radius: 20px;
+  }
+
+  /* CONTACT */
+  .contact-card {
+    background: #f7faf9; border: 1px solid #d4ece3;
+    border-radius: 16px; padding: 2.5rem 2rem; text-align: center;
+  }
+  .contact-title { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
+  .contact-sub { font-size: 14px; color: #666; margin-bottom: 1.75rem; }
+  .contact-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #fff; border: 1px solid #ddd;
+    border-radius: 8px; padding: 10px 18px;
+    font-size: 13px; font-weight: 500; color: #1a1a1a;
+    text-decoration: none; transition: border-color 0.2s, color 0.2s;
+  }
+  .contact-link:hover { border-color: #1D9E75; color: #1D9E75; }
+  .contact-link .icon { font-size: 16px; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid #f0f0f0; padding: 1.5rem 2rem;
+    text-align: center; font-size: 13px; color: #aaa;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .hero { grid-template-columns: 1fr; text-align: center; }
+    .hero-sub { max-width: 100%; }
+    .hero-btns { justify-content: center; }
+    .avatar-wrap { order: -1; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><span>Hafizur</span> Rahaman</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="about">
+  <div>
+    <div class="hero-badge">BSc Nursing Graduate</div>
+    <h1>
+      <span class="name">Hafizur Rahaman</span>
+      Dedicated to patient care & clinical excellence
+    </h1>
+    <p class="hero-sub">
+      Registered Nursing Graduate with clinical training at Govt. Medical College & General Hospital, Mysuru. Currently preparing for the NORCET Nursing Officer Examination.
+    </p>
+    <div class="hero-btns">
+      <a href="mailto:hebzurking@gmail.com" class="btn-primary">📧 Email Me</a>
+      <a href="#experience" class="btn-outline">View Experience</a>
+    </div>
+  </div>
+  <div class="avatar-wrap">
+    <div class="avatar">
+      HR
+      <div class="avatar-tag">Mysuru, Karnataka</div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- STATS -->
+<div class="section">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-num">4</div>
+      <div class="stat-lbl">Years of BSc Nursing</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">6+</div>
+      <div class="stat-lbl">Clinical Rotations</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">18</div>
+      <div class="stat-lbl">Subjects Covered</div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- SKILLS -->
+<div class="section" id="skills">
+  <div class="section-eyebrow">What I know</div>
+  <div class="section-title">Clinical skills</div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-icon">🫀</div>
+      <div>
+        <div class="skill-name">Medical-Surgical</div>
+        <div class="skill-desc">Pre/post-op care, wound dressing, IV therapy</div>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🤰</div>
+      <div>
+        <div class="skill-name">OBG Nursing</div>
+        <div class="skill-desc">ANC care, labour monitoring, postnatal support</div>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🧠</div>
+      <div>
+        <div class="skill-name">Mental Health</div>
+        <div class="skill-desc">Psychiatric assessments, therapeutic communication</div>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">👶</div>
+      <div>
+        <div class="skill-name">Child Health</div>
+        <div class="skill-desc">Paediatric nursing, growth monitoring, immunization</div>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🏘️</div>
+      <div>
+        <div class="skill-name">Community Health</div>
+        <div class="skill-desc">Health education, home visits, disease prevention</div>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">💊</div>
+      <div>
+        <div class="skill-name">Pharmacology</div>
+        <div class="skill-desc">Drug administration, dosage calculation, side effects</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- EXPERIENCE -->
+<div class="section" id="experience">
+  <div class="section-eyebrow">Background</div>
+  <div class="section-title">Education & training</div>
+  <div class="exp-list">
+    <div class="exp-card">
+      <div class="exp-dot-wrap"><div class="exp-dot"></div><div class="exp-line"></div></div>
+      <div>
+        <div class="exp-title">BSc Nursing</div>
+        <div class="exp-place">Balaji Institute of Nursing, Mysuru, Karnataka</div>
+        <div class="exp-desc">Completed 4-year undergraduate nursing program covering Medical-Surgical, OBG, Paediatrics, Mental Health, Community Health, and 18 core nursing subjects including Pharmacology, Microbiology, Pathology, and Nursing Research.</div>
+        <span class="exp-date">2020 – 2024</span>
+      </div>
+    </div>
+    <div class="exp-card">
+      <div class="exp-dot-wrap"><div class="exp-dot"></div><div class="exp-line"></div></div>
+      <div>
+        <div class="exp-title">Clinical Internship</div>
+        <div class="exp-place">Govt. Medical College & General Hospital, Mysuru</div>
+        <div class="exp-desc">Rotational internship across wards — General Medicine, Surgery, OT, ICU, OBG, Paediatrics, and Psychiatry. Hands-on patient care including vital monitoring, drug administration, wound dressing, and patient education under senior supervision.</div>
+        <span class="exp-date">2023 – 2024</span>
+      </div>
+    </div>
+    <div class="exp-card exp-last">
+      <div class="exp-dot-wrap"><div class="exp-dot"></div><div class="exp-line"></div></div>
+      <div>
+        <div class="exp-title">NORCET Preparation</div>
+        <div class="exp-place">Targeting AIIMS Nursing Officer Examination</div>
+        <div class="exp-desc">Actively preparing for the National Recruitment Cum Eligibility Test (NORCET) with focus on high-weightage topics, MCQ practice, and subject-wise revision across all nursing specialties.</div>
+        <span class="exp-date">2024 – Present</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- CONTACT -->
+<div class="section" id="contact">
+  <div class="contact-card">
+    <div class="contact-title">Open to opportunities</div>
+    <div class="contact-sub">Looking for Nursing Officer positions. Let's connect.</div>
+    <div class="contact-links">
+      <a href="mailto:hebzurking@gmail.com" class="contact-link">
+        <span class="icon">📧</span> hebzurking@gmail.com
+      </a>
+      <a href="#" class="contact-link" id="linkedin-btn">
+        <span class="icon">💼</span> LinkedIn — Add later
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  © 2024 Hafizur Rahaman &nbsp;·&nbsp; BSc Nursing Graduate &nbsp;·&nbsp; Mysuru, Karnataka
+</footer>
+
+</body>
+</html>
