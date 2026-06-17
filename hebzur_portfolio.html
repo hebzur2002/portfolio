@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Hebzur | Nursing Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Fraunces:wght@600;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sidebar-bg: #0f1623;
+    --sidebar-hover: #1a2235;
+    --sidebar-active: #1e2d45;
+    --accent: #4f9cf9;
+    --accent2: #38d9a9;
+    --text-main: #1a1f2e;
+    --text-muted: #6b7280;
+    --content-bg: #f5f7fa;
+    --card-bg: #ffffff;
+    --border: #e5e9f0;
+    --sidebar-w: 260px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--content-bg);
+    color: var(--text-main);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: var(--sidebar-w);
+    background: var(--sidebar-bg);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    z-index: 100;
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar-header {
+    padding: 32px 24px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .avatar {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    color: #fff;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+
+  .sidebar-name {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    color: #fff;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .sidebar-title {
+    font-size: 11.5px;
+    color: var(--accent);
+    margin-top: 4px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .sidebar-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .status-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent2);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .status-text {
+    font-size: 11.5px;
+    color: rgba(255,255,255,0.45);
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    padding: 20px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow-y: auto;
+  }
+
+  .nav-label {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    padding: 12px 12px 6px;
+    font-weight: 600;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: rgba(255,255,255,0.55);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.18s ease;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+  }
+
+  .nav-item:hover {
+    background: var(--sidebar-hover);
+    color: rgba(255,255,255,0.85);
+  }
+
+  .nav-item.active {
+    background: var(--sidebar-active);
+    color: #fff;
+    border-left: 3px solid var(--accent);
+    padding-left: 11px;
+  }
+
+  .nav-item .nav-icon {
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    padding: 16px 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .norcet-badge {
+    background: linear-gradient(135deg, rgba(79,156,249,0.15), rgba(56,217,169,0.15));
+    border: 1px solid rgba(79,156,249,0.25);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+
+  .norcet-badge p {
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .norcet-badge strong {
+    display: block;
+    font-size: 13px;
+    color: var(--accent);
+    margin-top: 2px;
+    font-weight: 600;
+  }
+
+  /* ── HAMBURGER ── */
+  .hamburger {
+    display: none;
+    position: fixed;
+    top: 16px; left: 16px;
+    z-index: 200;
+    background: var(--sidebar-bg);
+    border: none;
+    border-radius: 8px;
+    width: 40px; height: 40px;
+    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 20px; height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 99;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .section-page {
+    display: none;
+    padding: 40px 44px;
+    animation: fadeIn 0.25s ease;
+  }
+
+  .section-page.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .page-header {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .page-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .page-title {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.2;
+  }
+
+  .page-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    font-weight: 400;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  /* ── ABOUT ── */
+  .about-hero {
+    display: flex;
+    gap: 28px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .about-avatar-lg {
+    width: 90px; height: 90px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 34px;
+    color: #fff;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .about-info h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .about-info p {
+    color: var(--text-muted);
+    margin-top: 6px;
+    font-size: 14px;
+    line-height: 1.7;
+    max-width: 520px;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .tag {
+    background: #eef4ff;
+    color: #3b7fd4;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  .tag.green {
+    background: #e6faf5;
+    color: #1a9e7a;
+  }
+
+  .info-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .info-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .info-value {
+    font-size: 14px;
+    color: var(--text-main);
+    font-weight: 500;
+  }
+
+  /* ── SKILLS ── */
+  .skill-bar-wrap {
+    margin-bottom: 14px;
+  }
+
+  .skill-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .skill-bar-track {
+    height: 6px;
+    background: #e9edf5;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .skill-bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 1s ease;
+  }
+
+  .cert-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .cert-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .cert-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+
+  .cert-org {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .cert-year {
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  /* ── EXPERIENCE ── */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px; top: 8px;
+    width: 2px;
+    height: calc(100% - 16px);
+    background: var(--border);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 28px;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -24px;
+    top: 4px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 3px rgba(79,156,249,0.2);
+  }
+
+  .timeline-period {
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 4px;
+  }
+
+  .timeline-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+
+  .timeline-org {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .timeline-desc {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    line-height: 1.65;
+  }
+
+  .bullet-list {
+    margin-top: 8px;
+    padding-left: 16px;
+  }
+
+  .bullet-list li {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    line-height: 1.6;
+  }
+
+  /* ── NORCET PROGRESS ── */
+  .stat-card {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--card-bg);
+  }
+
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  .subject-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+
+  .subject-row:last-child { border-bottom: none; }
+
+  .subject-name {
+    font-size: 13.5px;
+    font-weight: 500;
+    flex: 1;
+    color: var(--text-main);
+  }
+
+  .subject-track {
+    flex: 1;
+    height: 5px;
+    background: #e9edf5;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .subject-fill {
+    height: 100%;
+    border-radius: 5px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+
+  .subject-pct {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    width: 36px;
+    text-align: right;
+  }
+
+  .status-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+
+  .badge-done { background: #e6faf5; color: #1a9e7a; }
+  .badge-active { background: #eef4ff; color: #3b7fd4; }
+  .badge-pending { background: #f3f4f6; color: #9ca3af; }
+
+  /* ── BLOG ── */
+  .blog-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--card-bg);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  .blog-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+
+  .blog-thumb {
+    height: 120px;
+    background: linear-gradient(135deg, #1e2d45, #0f1623);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+  }
+
+  .blog-body {
+    padding: 16px;
+  }
+
+  .blog-cat {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .blog-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-top: 4px;
+    line-height: 1.45;
+  }
+
+  .blog-meta {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  /* ── CONTACT ── */
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text-main);
+    background: var(--card-bg);
+    transition: all 0.18s;
+    margin-bottom: 12px;
+  }
+
+  .contact-link:hover {
+    border-color: var(--accent);
+    background: #f0f6ff;
+  }
+
+  .contact-icon {
+    font-size: 20px;
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: #eef4ff;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .contact-label { font-size: 13px; font-weight: 600; }
+  .contact-val { font-size: 12.5px; color: var(--text-muted); margin-top: 1px; }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 11px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text-main);
+    background: var(--card-bg);
+    margin-bottom: 12px;
+    outline: none;
+    transition: border-color 0.18s;
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: var(--accent);
+  }
+
+  .contact-form textarea {
+    height: 110px;
+    resize: vertical;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    border: none;
+    padding: 11px 28px;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.18s;
+  }
+
+  .btn-primary:hover { opacity: 0.9; }
+
+  /* ── RESPONSIVE ── */
+  /* ── HERO FRONT PAGE ── */
+  .hero-banner {
+    position: relative;
+    background: linear-gradient(135deg, #0f1623 0%, #1a2a45 60%, #0f2235 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 60px 52px;
+    margin-bottom: 20px;
+    min-height: 380px;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(79,156,249,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,156,249,0.07) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    pointer-events: none;
+  }
+
+  .blob-1 {
+    width: 300px; height: 300px;
+    background: rgba(79,156,249,0.12);
+    top: -80px; left: -60px;
+  }
+
+  .blob-2 {
+    width: 250px; height: 250px;
+    background: rgba(56,217,169,0.09);
+    bottom: -60px; right: 200px;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    width: 100%;
+  }
+
+  .hero-text {
+    flex: 1;
+    max-width: 520px;
+  }
+
+  .live-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(56,217,169,0.12);
+    border: 1px solid rgba(56,217,169,0.3);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px;
+    color: #38d9a9;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .live-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #38d9a9;
+    animation: pulse 2s infinite;
+  }
+
+  .hero-name {
+    margin-top: 18px;
+    line-height: 1.0;
+  }
+
+  .hero-first {
+    font-family: 'Fraunces', serif;
+    font-size: 58px;
+    font-weight: 700;
+    color: #ffffff;
+    display: block;
+    letter-spacing: -1px;
+  }
+
+  .hero-last {
+    font-family: 'Fraunces', serif;
+    font-size: 58px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #4f9cf9, #38d9a9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+    letter-spacing: -1px;
+  }
+
+  .hero-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .role-chip {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.75);
+    font-size: 12.5px;
+    font-weight: 500;
+    padding: 5px 13px;
+    border-radius: 20px;
+  }
+
+  .hero-bio {
+    margin-top: 18px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.75;
+  }
+
+  .hero-bio strong {
+    color: rgba(255,255,255,0.85);
+    font-weight: 600;
+  }
+
+  .hero-cta-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .hero-btn-primary {
+    background: linear-gradient(135deg, #4f9cf9, #38d9a9);
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.18s, transform 0.18s;
+  }
+
+  .hero-btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .hero-btn-ghost {
+    background: transparent;
+    color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+
+  .hero-btn-ghost:hover {
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+    border-color: rgba(255,255,255,0.35);
+  }
+
+  /* Profile Card */
+  .hero-profile-card {
+    flex-shrink: 0;
+    width: 220px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 28px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    backdrop-filter: blur(10px);
+  }
+
+  .profile-ring {
+    position: relative;
+    width: 90px; height: 90px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .profile-ring-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    animation: spin 8s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .profile-initials {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4f9cf9, #38d9a9);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    z-index: 1;
+  }
+
+  .profile-card-name {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-top: 4px;
+  }
+
+  .profile-card-role {
+    font-size: 11.5px;
+    color: rgba(255,255,255,0.45);
+    text-align: center;
+  }
+
+  .profile-stats {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-top: 6px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .pstat { text-align: center; padding: 0 10px; }
+
+  .pstat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #4f9cf9;
+  }
+
+  .pstat-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 1px;
+  }
+
+  .pstat-divider {
+    width: 1px;
+    height: 28px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  .profile-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin-top: 4px;
+  }
+
+  .ptag {
+    background: rgba(79,156,249,0.12);
+    border: 1px solid rgba(79,156,249,0.2);
+    color: #4f9cf9;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* QUICK INFO STRIP */
+  .hero-info-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+
+  .hi-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    transition: box-shadow 0.18s, transform 0.18s;
+  }
+
+  .hi-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    transform: translateY(-2px);
+  }
+
+  .hi-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .hi-label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .hi-val {
+    font-size: 13px;
+    color: var(--text-main);
+    font-weight: 500;
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 768px) {
+    .sidebar {
+      transform: translateX(-100%);
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .hamburger {
+      display: flex;
+    }
+
+    .overlay.visible {
+      display: block;
+    }
+
+    .main {
+      margin-left: 0;
+    }
+
+    .section-page {
+      padding: 72px 20px 32px;
+    }
+
+    .grid-2, .grid-3, .blog-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-banner {
+      padding: 40px 24px;
+      min-height: auto;
+    }
+
+    .hero-inner {
+      flex-direction: column-reverse;
+      gap: 28px;
+    }
+
+    .hero-first, .hero-last {
+      font-size: 40px;
+    }
+
+    .hero-profile-card {
+      width: 100%;
+    }
+
+    .hero-info-row {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .info-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hamburger -->
+<button class="hamburger" id="hamburger" aria-label="Menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="overlay" id="overlay"></div>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="avatar">H</div>
+    <div class="sidebar-name">Hafizur Rahman</div>
+    <div class="sidebar-title">Registered Nurse · BSc</div>
+    <div class="sidebar-status">
+      <div class="status-dot"></div>
+      <span class="status-text">Open to opportunities</span>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-label">Portfolio</div>
+    <button class="nav-item active" onclick="showSection('about', this)">
+      <span class="nav-icon">👤</span> About Me
+    </button>
+    <button class="nav-item" onclick="showSection('skills', this)">
+      <span class="nav-icon">🧠</span> Skills & Certifications
+    </button>
+    <button class="nav-item" onclick="showSection('experience', this)">
+      <span class="nav-icon">🏥</span> Experience
+    </button>
+
+    <div class="nav-label">Growth</div>
+    <button class="nav-item" onclick="showSection('norcet', this)">
+      <span class="nav-icon">📊</span> NORCET Progress
+    </button>
+    <button class="nav-item" onclick="showSection('blog', this)">
+      <span class="nav-icon">📝</span> Study Notes
+    </button>
+
+    <div class="nav-label">Connect</div>
+    <button class="nav-item" onclick="showSection('contact', this)">
+      <span class="nav-icon">✉️</span> Contact Me
+    </button>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="norcet-badge">
+      <p>Current Goal</p>
+      <strong>AIIMS Nursing Officer 2025</strong>
+    </div>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<main class="main">
+
+  <!-- ABOUT / HERO FRONT PAGE -->
+  <section class="section-page active" id="about">
+
+    <!-- FULL HERO BANNER -->
+    <div class="hero-banner">
+      <div class="hero-grid-bg"></div>
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+
+      <div class="hero-inner">
+        <!-- LEFT: Text -->
+        <div class="hero-text">
+          <div class="hero-eyebrow">
+            <span class="live-pill"><span class="live-dot"></span>Open to Opportunities</span>
+          </div>
+
+          <h1 class="hero-name">
+            <span class="hero-first">Hafizur</span><br>
+            <span class="hero-last">Rahman</span>
+          </h1>
+
+          <div class="hero-roles">
+            <span class="role-chip">🏥 BSc Nursing</span>
+            <span class="role-chip">📋 NORCET 2025</span>
+            <span class="role-chip">🌍 USA / Australia</span>
+          </div>
+
+          <p class="hero-bio">
+            Registered Nurse · BSc Graduate from <strong>Balaji Institute of Nursing, Mysuru</strong>.
+            Interned at <strong>Govt. Medical College & General Hospital</strong>.
+            On a mission to crack NORCET and become an <strong>AIIMS Nursing Officer</strong>.
+          </p>
+
+          <div class="hero-cta-row">
+            <button class="hero-btn-primary" onclick="showSection('experience', document.querySelectorAll('.nav-item')[2])">View Experience</button>
+            <button class="hero-btn-ghost" onclick="showSection('contact', document.querySelectorAll('.nav-item')[5])">Contact Me</button>
+          </div>
+        </div>
+
+        <!-- RIGHT: Profile Card -->
+        <div class="hero-profile-card">
+          <div class="profile-ring">
+            <svg class="profile-ring-svg" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(79,156,249,0.15)" stroke-width="2"/>
+              <circle cx="60" cy="60" r="54" fill="none" stroke="url(#ringGrad)" stroke-width="2.5" stroke-dasharray="339" stroke-dashoffset="80" stroke-linecap="round"/>
+              <defs>
+                <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#4f9cf9"/>
+                  <stop offset="100%" stop-color="#38d9a9"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <div class="profile-initials">HR</div>
+          </div>
+
+          <div class="profile-card-name">Hafizur Rahman</div>
+          <div class="profile-card-role">Nursing Officer Aspirant · Karnataka</div>
+
+          <div class="profile-stats">
+            <div class="pstat">
+              <div class="pstat-num">4</div>
+              <div class="pstat-label">Yrs Study</div>
+            </div>
+            <div class="pstat-divider"></div>
+            <div class="pstat">
+              <div class="pstat-num">12+</div>
+              <div class="pstat-label">Mo. Intern</div>
+            </div>
+            <div class="pstat-divider"></div>
+            <div class="pstat">
+              <div class="pstat-num">18</div>
+              <div class="pstat-label">Subjects</div>
+            </div>
+          </div>
+
+          <div class="profile-tags">
+            <span class="ptag">Karnataka</span>
+            <span class="ptag">RGUHS</span>
+            <span class="ptag">AIIMS Target</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUICK INFO STRIP -->
+    <div class="hero-info-row">
+      <div class="hi-card">
+        <div class="hi-icon">🎓</div>
+        <div class="hi-content">
+          <div class="hi-label">Education</div>
+          <div class="hi-val">BSc Nursing · RGUHS · 2024</div>
+        </div>
+      </div>
+      <div class="hi-card">
+        <div class="hi-icon">🏥</div>
+        <div class="hi-content">
+          <div class="hi-label">Internship</div>
+          <div class="hi-val">Govt. Medical College, Mysuru</div>
+        </div>
+      </div>
+      <div class="hi-card">
+        <div class="hi-icon">🎯</div>
+        <div class="hi-content">
+          <div class="hi-label">Current Goal</div>
+          <div class="hi-val">NORCET → AIIMS Nursing Officer</div>
+        </div>
+      </div>
+      <div class="hi-card">
+        <div class="hi-icon">✈️</div>
+        <div class="hi-content">
+          <div class="hi-label">Long Term</div>
+          <div class="hi-val">International Nursing · USA / Australia</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section-page" id="skills">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">Competencies</div>
+        <h1 class="page-title">Skills & Certifications</h1>
+        <p class="page-subtitle">Clinical skills, academic strengths, and credentials</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Clinical Skills</div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Medication Administration</span><span>90%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:90%"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Patient Assessment</span><span>85%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:85%"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>IV Cannulation & Care</span><span>80%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:80%"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Wound Management</span><span>78%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:78%"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Emergency Response</span><span>75%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:75%"></div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Academic Strengths</div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Pharmacology</span><span>82%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:82%"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Medical Surgical Nursing</span><span>88%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:88%"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>OBG Nursing</span><span>80%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:80%"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Community Health Nursing</span><span>77%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:77%"></div></div>
+        </div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-label"><span>Child Health Nursing</span><span>74%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" style="width:74%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Certifications & Credentials</div>
+      <div class="grid-2">
+        <div class="cert-card">
+          <div class="cert-icon">🎓</div>
+          <div>
+            <div class="cert-name">BSc Nursing</div>
+            <div class="cert-org">Balaji Institute of Nursing, Mysuru · Rajiv Gandhi University of Health Sciences</div>
+            <div class="cert-year">2024</div>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon">🏥</div>
+          <div>
+            <div class="cert-name">Clinical Internship</div>
+            <div class="cert-org">Govt. Medical College & General Hospital, Mysuru</div>
+            <div class="cert-year">2023–2024</div>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon">💉</div>
+          <div>
+            <div class="cert-name">BLS / Basic Life Support</div>
+            <div class="cert-org">Hospital Training — CPR & Emergency Protocol</div>
+            <div class="cert-year">2023</div>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon">📋</div>
+          <div>
+            <div class="cert-name">NORCET Eligibility</div>
+            <div class="cert-org">AIIMS — National Recruitment Cum Eligibility Test</div>
+            <div class="cert-year">Appearing 2025</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section-page" id="experience">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">Work History</div>
+        <h1 class="page-title">Experience & Internship</h1>
+        <p class="page-subtitle">Clinical rotations and hands-on patient care</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Clinical Timeline</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-period">2023 – 2024 · 12 Months</div>
+          <div class="timeline-title">Intern Nurse</div>
+          <div class="timeline-org">Govt. Medical College & General Hospital, Mysuru</div>
+          <ul class="bullet-list">
+            <li>Rotated through Medical, Surgical, OBG, Paediatric, ICU & Community Health wards</li>
+            <li>Assisted in 500+ patient assessments and vital sign monitoring</li>
+            <li>Performed IV cannulation, catheterization, NG tube insertion under supervision</li>
+            <li>Participated in health education programs for patients and families</li>
+            <li>Managed medication charts and drug administration records</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--accent2)"></div>
+          <div class="timeline-period">2020 – 2024 · 4 Years</div>
+          <div class="timeline-title">BSc Nursing Student</div>
+          <div class="timeline-org">Balaji Institute of Nursing, Mysuru</div>
+          <ul class="bullet-list">
+            <li>Completed 4-year undergraduate nursing program under RGUHS</li>
+            <li>Studied 18 core subjects including Pharmacology, MSN, OBG, Mental Health Nursing</li>
+            <li>Conducted community health surveys and immunization drives</li>
+            <li>Participated in nursing skills lab, simulation training, and clinical postings</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Ward Rotations</div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; justify-content:space-between; font-size:13.5px; padding:8px 0; border-bottom:1px solid var(--border);">
+            <span>Medical Ward</span><span class="tag">3 Months</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:13.5px; padding:8px 0; border-bottom:1px solid var(--border);">
+            <span>Surgical Ward</span><span class="tag">2 Months</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:13.5px; padding:8px 0; border-bottom:1px solid var(--border);">
+            <span>OBG / Maternity</span><span class="tag">2 Months</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:13.5px; padding:8px 0; border-bottom:1px solid var(--border);">
+            <span>Paediatric Ward</span><span class="tag">2 Months</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:13.5px; padding:8px 0;">
+            <span>Community Health</span><span class="tag">3 Months</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Key Procedures Performed</div>
+        <div class="tag-list">
+          <span class="tag">IV Cannulation</span>
+          <span class="tag">Catheterization</span>
+          <span class="tag">NG Tube</span>
+          <span class="tag">Wound Dressing</span>
+          <span class="tag">Blood Collection</span>
+          <span class="tag">CPR / BLS</span>
+          <span class="tag">Medication Admin</span>
+          <span class="tag">Vital Signs</span>
+          <span class="tag">ECG Monitoring</span>
+          <span class="tag">Patient Education</span>
+          <span class="tag">Nebulization</span>
+          <span class="tag">Suture Removal</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NORCET -->
+  <section class="section-page" id="norcet">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">Exam Preparation</div>
+        <h1 class="page-title">NORCET Progress Tracker</h1>
+        <p class="page-subtitle">AIIMS Nursing Officer — 14-week preparation plan</p>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="stat-card">
+        <div class="stat-num">14</div>
+        <div class="stat-label">Week Study Plan</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2h</div>
+        <div class="stat-label">Daily Target</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color:var(--accent2)">6</div>
+        <div class="stat-label">Active Subjects</div>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-top:20px;">
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Subject Progress</div>
+        <div class="subject-row">
+          <span class="subject-name">Medical Surgical Nursing</span>
+          <div class="subject-track"><div class="subject-fill" style="width:65%"></div></div>
+          <span class="subject-pct">65%</span>
+          <span class="status-badge badge-active">Active</span>
+        </div>
+        <div class="subject-row">
+          <span class="subject-name">Pharmacology</span>
+          <div class="subject-track"><div class="subject-fill" style="width:60%"></div></div>
+          <span class="subject-pct">60%</span>
+          <span class="status-badge badge-active">Active</span>
+        </div>
+        <div class="subject-row">
+          <span class="subject-name">OBG Nursing</span>
+          <div class="subject-track"><div class="subject-fill" style="width:50%"></div></div>
+          <span class="subject-pct">50%</span>
+          <span class="status-badge badge-active">Active</span>
+        </div>
+        <div class="subject-row">
+          <span class="subject-name">Mental Health Nursing</span>
+          <div class="subject-track"><div class="subject-fill" style="width:45%"></div></div>
+          <span class="subject-pct">45%</span>
+          <span class="status-badge badge-active">Active</span>
+        </div>
+        <div class="subject-row">
+          <span class="subject-name">Community Health Nursing</span>
+          <div class="subject-track"><div class="subject-fill" style="width:35%"></div></div>
+          <span class="subject-pct">35%</span>
+          <span class="status-badge badge-pending">Pending</span>
+        </div>
+        <div class="subject-row">
+          <span class="subject-name">Child Health Nursing</span>
+          <div class="subject-track"><div class="subject-fill" style="width:30%"></div></div>
+          <span class="subject-pct">30%</span>
+          <span class="status-badge badge-pending">Pending</span>
+        </div>
+        <div class="subject-row">
+          <span class="subject-name">Nursing Foundation</span>
+          <div class="subject-track"><div class="subject-fill" style="width:80%"></div></div>
+          <span class="subject-pct">80%</span>
+          <span class="status-badge badge-done">Done</span>
+        </div>
+        <div class="subject-row">
+          <span class="subject-name">Microbiology</span>
+          <div class="subject-track"><div class="subject-fill" style="width:70%"></div></div>
+          <span class="subject-pct">70%</span>
+          <span class="status-badge badge-done">Done</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>High-Weightage NORCET Topics</div>
+        <div style="display:flex; flex-direction:column; gap:10px; margin-top:4px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:13.5px;">
+            <span>Medical Surgical Nursing</span>
+            <span class="tag">~25%</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:13.5px;">
+            <span>Pharmacology</span>
+            <span class="tag">~15%</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:13.5px;">
+            <span>OBG Nursing</span>
+            <span class="tag">~12%</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:13.5px;">
+            <span>Child Health Nursing</span>
+            <span class="tag">~10%</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:13.5px;">
+            <span>Mental Health Nursing</span>
+            <span class="tag">~8%</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:13.5px;">
+            <span>Community Health Nursing</span>
+            <span class="tag">~10%</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:13.5px;">
+            <span>Nursing Foundation</span>
+            <span class="tag">~10%</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:13.5px;">
+            <span>Other Subjects</span>
+            <span class="tag">~10%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG / STUDY NOTES -->
+  <section class="section-page" id="blog">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">Knowledge Sharing</div>
+        <h1 class="page-title">Study Notes & Blog</h1>
+        <p class="page-subtitle">NORCET prep notes, nursing concepts, exam tips</p>
+      </div>
+    </div>
+
+    <div class="blog-grid">
+      <div class="blog-card">
+        <div class="blog-thumb">💊</div>
+        <div class="blog-body">
+          <div class="blog-cat">Pharmacology</div>
+          <div class="blog-title">Penicillin Mechanism — "Raj Mistri" Analogy Explained</div>
+          <div class="blog-meta">5 min read · NORCET 2025</div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-thumb">🧬</div>
+        <div class="blog-body">
+          <div class="blog-cat">Microbiology</div>
+          <div class="blog-title">Beta-Lactamase Resistance — How Bacteria Fight Back</div>
+          <div class="blog-meta">4 min read · NORCET 2025</div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-thumb">🤰</div>
+        <div class="blog-body">
+          <div class="blog-cat">OBG Nursing</div>
+          <div class="blog-title">Stages of Normal Labour — Complete NORCET Notes</div>
+          <div class="blog-meta">6 min read · NORCET 2025</div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-thumb">🧠</div>
+        <div class="blog-body">
+          <div class="blog-cat">Mental Health Nursing</div>
+          <div class="blog-title">Types of Attention — Mnemonic for NORCET MCQs</div>
+          <div class="blog-meta">3 min read · NORCET 2025</div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-thumb">⚡</div>
+        <div class="blog-body">
+          <div class="blog-cat">Pharmacology</div>
+          <div class="blog-title">Hypersensitivity Reactions Type I–IV — Quick Revision</div>
+          <div class="blog-meta">5 min read · NORCET 2025</div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-thumb">🌍</div>
+        <div class="blog-body">
+          <div class="blog-cat">Career</div>
+          <div class="blog-title">Nursing Abroad Roadmap 2026 — USA vs Australia vs Gulf</div>
+          <div class="blog-meta">8 min read · Career Guide</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section-page" id="contact">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">Get in Touch</div>
+        <h1 class="page-title">Contact Me</h1>
+        <p class="page-subtitle">Open to job opportunities, collaborations, and study groups</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <div class="card">
+          <div class="card-title"><span class="dot"></span>Reach Out</div>
+          <a href="mailto:your.email@gmail.com" class="contact-link">
+            <div class="contact-icon">📧</div>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-val">your.email@gmail.com</div>
+            </div>
+          </a>
+          <a href="https://linkedin.com/in/yourprofile" target="_blank" class="contact-link">
+            <div class="contact-icon">💼</div>
+            <div>
+              <div class="contact-label">LinkedIn</div>
+              <div class="contact-val">linkedin.com/in/yourprofile</div>
+            </div>
+          </a>
+          <a href="https://instagram.com/yourhandle" target="_blank" class="contact-link">
+            <div class="contact-icon">📸</div>
+            <div>
+              <div class="contact-label">Instagram</div>
+              <div class="contact-val">@yourhandle · Nursing Content</div>
+            </div>
+          </a>
+          <a href="tel:+919999999999" class="contact-link">
+            <div class="contact-icon">📞</div>
+            <div>
+              <div class="contact-label">Phone</div>
+              <div class="contact-val">+91 99999 99999</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>Send a Message</div>
+        <div class="contact-form">
+          <input type="text" placeholder="Your Name" />
+          <input type="email" placeholder="Your Email" />
+          <input type="text" placeholder="Subject (e.g. Job Inquiry, Collaboration)" />
+          <textarea placeholder="Your message..."></textarea>
+          <button class="btn-primary" onclick="alert('Message feature — connect your backend or use Formspree!')">Send Message</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  function showSection(id, btn) {
+    document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    // Close sidebar on mobile
+    if (window.innerWidth <= 768) {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('visible');
+    }
+  }
+
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('visible');
+  });
+
+  document.getElementById('overlay').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('visible');
+  });
+</script>
+</body>
+</html>
