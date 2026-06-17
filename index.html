@@ -1686,13 +1686,13 @@
 
       <div class="card">
         <div class="card-title"><span class="dot"></span>Send a Message</div>
-        <div class="contact-form">
-          <input type="text" placeholder="Your Name" />
-          <input type="email" placeholder="Your Email" />
-          <input type="text" placeholder="Subject (e.g. Job Inquiry, Collaboration)" />
-          <textarea placeholder="Your message..."></textarea>
-          <button class="btn-primary" onclick="alert('Message feature — connect your backend or use Formspree!')">Send Message</button>
-        </div>
+        <form class="contact-form" action="https://formspree.io/f/mjgddbng" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required />
+    <input type="email" name="email" placeholder="Your Email" required />
+    <input type="text" name="subject" placeholder="Subject (e.g. Job Inquiry, Collaboration)" />
+    <textarea name="message" placeholder="Your message..."></textarea>
+    <button type="submit" class="btn-primary">Send Message</button>
+        </form>
       </div>
     </div>
   </section>
